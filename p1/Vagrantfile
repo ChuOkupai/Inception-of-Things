@@ -1,0 +1,24 @@
+Vagrant.configure("2") do |config|
+  config.vm.box = "debian/bookworm64"
+
+  config.vm.define "douattarS" do |control|
+    control.vm.hostname = "douattarS"
+    control.vm.network "private_network", ip: "192.168.56.110"
+    control.vm.provider "virtualbox" do |v|
+      v.customize ["modifyvm", :id, "--name", "douattarS"]
+      v.memory = 512
+      v.cpus = 1
+    end
+    control.vm.provision "shell", path: "scripts/install_k3s.sh"
+  end
+  config.vm.define "douattarSW" do |control|
+    control.vm.hostname = "douattarSW"
+    control.vm.network "private_network", ip: "192.168.56.111"
+    control.vm.provider "virtualbox" do |v|
+      v.customize ["modifyvm", :id, "--name", "douattarSW"]
+      v.memory = 512
+      v.cpus = 1
+    end
+    control.vm.provision "shell", path: "scripts/test.sh"
+  end
+end
