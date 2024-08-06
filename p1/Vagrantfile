@@ -1,24 +1,34 @@
-Vagrant.configure("2") do |config|
-  config.vm.box = "debian/bookworm64"
+BOX_RAM = 512
+BOX_CPUS = 1
+SERVER_NAME = "douattarS"
+SERVER_IP = "192.168.56.110"
+WORKER_NAME = "douattarSW"
+WORKER_IP = "192.168.56.111"
 
-  config.vm.define "douattarS" do |control|
-    control.vm.hostname = "douattarS"
-    control.vm.network "private_network", ip: "192.168.56.110"
+Vagrant.configure("2") do |config|
+  config.vm.box = "centos/8"
+  config.ssh.insert_key = false
+  config.ssh.dsa_authentication = false
+
+  config.vm.define SERVER_NAME do |control|
+    control.vm.hostname = SERVER_NAME
+    control.vm.network "private_network", ip: SERVER_IP
     control.vm.provider "virtualbox" do |v|
-      v.customize ["modifyvm", :id, "--name", "douattarS"]
-      v.memory = 512
-      v.cpus = 1
+      v.customize ["modifyvm", :id, "--name", SERVER_NAME]
+      v.memory = BOX_RAM
+      v.cpus = BOX_CPUS
     end
-    control.vm.provision "shell", path: "scripts/install_k3s.sh"
+    control.vm.provision "shell", path: "scripts/setup_server.sh"
   end
-  config.vm.define "douattarSW" do |control|
-    control.vm.hostname = "douattarSW"
-    control.vm.network "private_network", ip: "192.168.56.111"
+
+  config.vm.define WORKER_NAME do |control|
+    control.vm.hostname = WORKER_NAME
+    control.vm.network "private_network", ip: WORKER_IP
     control.vm.provider "virtualbox" do |v|
-      v.customize ["modifyvm", :id, "--name", "douattarSW"]
-      v.memory = 512
-      v.cpus = 1
+      v.customize ["modifyvm", :id, "--name", WORKER_NAME]
+      v.memory = BOX_RAM
+      v.cpus = BOX_CPUS
     end
-    control.vm.provision "shell", path: "scripts/test.sh"
+    control.vm.provision "shell", path: "scripts/setup_worker.sh"
   end
 end
