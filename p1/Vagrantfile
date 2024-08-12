@@ -1,34 +1,36 @@
-BOX_RAM = 512
-BOX_CPUS = 1
-SERVER_NAME = "douattarS"
-SERVER_IP = "192.168.56.110"
-WORKER_NAME = "douattarSW"
-WORKER_IP = "192.168.56.111"
+USER = ENV['USER']
+SERVER_NAME = "#{USER}S"
+SERVER_IP = '192.168.56.110'
+WORKER_NAME = "#{USER}SW"
+WORKER_IP = '192.168.56.111'
+TOKEN_PATH = '/vagrant/secrets/node-token'
 
-Vagrant.configure("2") do |config|
-  config.vm.box = "centos/8"
+Vagrant.configure('2') do |config|
+  config.vm.box = 'generic/alpine318'
+  config.vm.synced_folder '.', '/vagrant'
   config.ssh.insert_key = false
   config.ssh.dsa_authentication = false
 
-  config.vm.define SERVER_NAME do |control|
-    control.vm.hostname = SERVER_NAME
-    control.vm.network "private_network", ip: SERVER_IP
-    control.vm.provider "virtualbox" do |v|
-      v.customize ["modifyvm", :id, "--name", SERVER_NAME]
-      v.memory = BOX_RAM
-      v.cpus = BOX_CPUS
-    end
-    control.vm.provision "shell", path: "scripts/setup_server.sh"
+  config.vm.provider 'virtualbox' do |v|
+    v.cpus = 1
+    v.memory = 1024
   end
 
-  config.vm.define WORKER_NAME do |control|
-    control.vm.hostname = WORKER_NAME
-    control.vm.network "private_network", ip: WORKER_IP
-    control.vm.provider "virtualbox" do |v|
-      v.customize ["modifyvm", :id, "--name", WORKER_NAME]
-      v.memory = BOX_RAM
-      v.cpus = BOX_CPUS
+  config.vm.define SERVER_NAME do |control|
+    control.vm.hostname = SERVER_NAME
+    control.vm.network 'private_network', ip: SERVER_IP
+    control.vm.provider 'virtualbox' do |v|
+      v.name = SERVER_NAME
     end
-    control.vm.provision "shell", path: "scripts/setup_worker.sh"
+    control.vm.provision 'shell', privileged: true, path: 'scripts/setup_server.sh', args: [TOKEN_PATH]
+  end
+
+  config.vm.define WORKER_NAME do |worker|
+    worker.vm.hostname = WORKER_NAME
+    worker.vm.network 'private_network', ip: WORKER_IP
+    worker.vm.provider 'virtualbox' do |v|
+      v.name = WORKER_NAME
+    end
+    worker.vm.provision 'shell', privileged: true, path: 'scripts/setup_worker.sh', args: [TOKEN_PATH, SERVER_IP]
   end
 end

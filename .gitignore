@@ -80,3 +80,6 @@ lib/vagrant/vagrant_ssl.so
 
 # direnv directory
 .direnv
+
+# K3s credentials
+node-token
