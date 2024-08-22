@@ -43,7 +43,7 @@ The worker node is configured using the `scripts/setup_worker.sh` script. This s
 Once the environment is up and running, you can interact with the Kubernetes cluster using `kubectl`. The `kubectl` command is aliased to `k` on both the server and worker nodes. For example, to get the list of nodes in the cluster, _SSH_ into the server node and run:
 
 ```sh
-vagrant ssh douattarS
+vagrant ssh "${USER}S"
 k get nodes -o wide
 ```
 
