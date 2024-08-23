@@ -1,28 +1,28 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: app1
+  name: APP_NAME
 spec:
   type: ClusterIP
   ports:
   - port: 80
     targetPort: 8080
   selector:
-    app: app1
+    app: APP_NAME
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app1
+  name: APP_NAME
 spec:
-  replicas: 1
+  replicas: REPLICAS
   selector:
     matchLabels:
-      app: app1
+      app: APP_NAME
   template:
     metadata:
       labels:
-        app: app1
+        app: APP_NAME
     spec:
       containers:
       - name: hello-kubernetes
@@ -31,4 +31,4 @@ spec:
         - containerPort: 8080
         env:
         - name: MESSAGE
-          value: Hello from app1.
+          value: Hello from APP_NAME.

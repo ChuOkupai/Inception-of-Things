@@ -1,0 +1,10 @@
+  - host: "APP_NAME.com"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: APP_NAME
+            port:
+              number: 80
