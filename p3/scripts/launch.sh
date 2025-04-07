@@ -6,7 +6,7 @@
 curl -s https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
 
 # Create a K3d cluster
-k3d cluster create LesDemeuresS --port "8888:80@loadbalancer" --port "8080:80@loadbalancer"
+k3d cluster create LesDemeuresS --port "8888:8888@loadbalancer"
 
 # Now create the namespaces and install Argo CD
 kubectl create namespace argocd
@@ -39,31 +39,11 @@ else
     ARGOCD_PWD="<password not available yet>"
 fi
 
-# argocd login localhost:8080 --username admin --password "$ARGOCD_PWD" --insecure
-# argocd app sync wil-playground --server localhost:8080 --insecure
-
 # Apply your application file
 kubectl apply -f confs/app.yaml
-
-# wait and port forwarding not working
-echo "Waiting for application to be ready (this might take a few minutes)..."
-kubectl wait --for=condition=available --timeout=300s svc/wil-playground-service -n dev
-echo "Application is ready!"
-
-echo "Starting port forwarding for the application..."
-kubectl port-forward svc/wil-playground-service -n dev 8888:8888 & > /dev/null 2>&1
-echo "Application port forwarding started!"
 
 # 10. Print installation completion message
 echo "===== Installation completed! ====="
 echo "ArgoCD UI: https://localhost:8080 (username: admin, password: $ARGOCD_PWD)"
 echo "Application: http://localhost:8888"
 echo ""
-# echo "IMPORTANT: If ArgoCD is not available immediately, wait a few minutes for all pods to start."
-# echo "Check status with: kubectl get pods -n argocd"
-# echo ""
-# echo "To see when ArgoCD server is ready, run:"
-# echo "  kubectl get deployment argocd-server -n argocd"
-# echo ""
-# echo "Checking application availability..."
-# curl -s http://localhost:8888 || echo "Application not yet available, it may take some time to deploy"
