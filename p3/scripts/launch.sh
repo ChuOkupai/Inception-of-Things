@@ -40,23 +40,19 @@ else
 fi
 
 # argocd login localhost:8080 --username admin --password "$ARGOCD_PWD" --insecure
-# argocd app sync will-playground --server localhost:8080 --insecure
+# argocd app sync wil-playground --server localhost:8080 --insecure
 
 # Apply your application file
 kubectl apply -f confs/app.yaml
 
 # wait and port forwarding not working
 echo "Waiting for application to be ready (this might take a few minutes)..."
-kubectl wait --for=condition=available --timeout=300s svc/will-playground-service -n dev
+kubectl wait --for=condition=available --timeout=300s svc/wil-playground-service -n dev
 echo "Application is ready!"
 
 echo "Starting port forwarding for the application..."
-kubectl port-forward svc/will-playground-service -n dev 8888:8888 & > /dev/null 2>&1
+kubectl port-forward svc/wil-playground-service -n dev 8888:8888 & > /dev/null 2>&1
 echo "Application port forwarding started!"
-
-
-# argocd app sync wil-playground --server localhost:8080 --insecure
-
 
 # 10. Print installation completion message
 echo "===== Installation completed! ====="

@@ -137,7 +137,7 @@ else
 fi
 
 # We're keeping all CLI tools installed (kubectl, argocd) for future reinstallations
-echo "CLI tools (kubectl, argocd) will remain installed for future use."
+echo "CLI tools (kubectl, argocd) wil remain installed for future use."
 
 # Verify everything is cleaned up
 print_header "Verification"
