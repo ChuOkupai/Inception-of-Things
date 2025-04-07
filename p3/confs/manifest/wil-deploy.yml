@@ -16,7 +16,7 @@ spec:
         app: will-playground
     spec:
       containers:
-        - name: playground
+        - name: will-playground
           image: "wil42/playground:v1"
           ports:
             - containerPort: 8888
@@ -27,10 +27,10 @@ metadata:
   name: will-playground-service
   namespace: dev
 spec:
+  type: LoadBalancer
   selector:
     app: will-playground
   ports:
     - protocol: TCP
       port: 8888
       targetPort: 8888
-  type: LoadBalancer

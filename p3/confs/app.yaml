@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: 'https://gitlab.com/lcocozza/just-a-chill-repo.git'
     targetRevision: HEAD
-    path: manifest
+    path: manifests
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: dev
