@@ -20,9 +20,8 @@ echo "ArgoCD server is ready!"
 
 # Now do port-forwarding
 echo "Starting port forwarding for ArgoCD UI..."
-kubectl port-forward svc/argocd-server -n argocd 8080:443 & > /dev/null 2>&1
+kubectl port-forward --address 0.0.0.0 svc/argocd-server -n argocd 8080:443 & > /dev/null 2>&1
 echo "ArgoCD port forwarding started!"
-
 
 ## APPLICATION
 
