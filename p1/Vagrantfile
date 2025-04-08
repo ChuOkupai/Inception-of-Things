@@ -10,10 +10,11 @@ Vagrant.configure('2') do |config|
   config.vm.synced_folder '.', '/vagrant'
   config.ssh.insert_key = false
   config.ssh.dsa_authentication = false
+  config.vm.boot_timeout = 600
 
   config.vm.provider 'virtualbox' do |v|
-    v.cpus = 1
-    v.memory = 1024
+    v.cpus = 4
+    v.memory = 4024
   end
 
   config.vm.define SERVER_NAME do |control|
