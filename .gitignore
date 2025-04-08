@@ -84,3 +84,5 @@ lib/vagrant/vagrant_ssl.so
 # K3s credentials
 node-token
 **/argocd-linux-amd64
+.vagrant/
+secrets/
