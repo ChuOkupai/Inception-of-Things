@@ -44,8 +44,8 @@ curl -H "Host: app1.com" http://192.168.56.110
 # Access app2
 curl -H "Host: app2.com" http://192.168.56.110
 
-# Access app3 (default)
-curl http://192.168.56.110
+# Access app3
+curl -H "Host: app3.com" http://192.168.56.110
 ```
 
 ## Configuration Details
@@ -53,8 +53,8 @@ curl http://192.168.56.110
 ### 1. Virtual Machine Setup
 
 The VM is configured using Alpine Linux 3.20 with minimal resources:
-- 1 CPU
-- 1GB of RAM
+- 2 CPU
+- 2GB of RAM
 - Private network interface with static IP 192.168.56.110
 
 ### 2. Application Deployment

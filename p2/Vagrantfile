@@ -13,8 +13,8 @@ Vagrant.configure('2') do |cfg|
     control.vm.network 'private_network', ip: SERVER_IP
     control.vm.provider 'virtualbox' do |v|
       v.name = SERVER_NAME
-      v.cpus = 4
-      v.memory = 4024
+      v.cpus = 2
+      v.memory = 2024
     end
     control.vm.provision 'shell', privileged: true, path: 'scripts/setup.sh'
   end
