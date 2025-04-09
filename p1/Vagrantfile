@@ -1,7 +1,6 @@
-USER = ENV['USER']
-SERVER_NAME = "#{USER}S"
+SERVER_NAME = "lucocozzS"
 SERVER_IP = '192.168.56.110'
-WORKER_NAME = "#{USER}SW"
+WORKER_NAME = "lucocozzSW"
 WORKER_IP = '192.168.56.111'
 TOKEN_PATH = '/vagrant/secrets/node-token'
 
